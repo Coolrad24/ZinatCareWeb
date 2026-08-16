@@ -15,17 +15,21 @@ export function StoreProvider({ children }) {
   }, [])
 
   const addToCart = useCallback(
-    (product) => {
+    (product, qty = 1) => {
       setCart((prev) => {
         const existing = prev.find((row) => row.product.id === product.id)
         if (existing) {
           return prev.map((row) =>
-            row.product.id === product.id ? { ...row, qty: row.qty + 1 } : row
+            row.product.id === product.id ? { ...row, qty: row.qty + qty } : row
           )
         }
-        return [...prev, { product, qty: 1 }]
+        return [...prev, { product, qty }]
       })
-      showToast(`Added "${product.name}" to cart`)
+      showToast(
+        qty > 1
+          ? `Added ${qty} × "${product.name}" to cart`
+          : `Added "${product.name}" to cart`
+      )
     },
     [showToast]
   )

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useStore } from '../context/StoreContext.jsx'
 import { imageProps } from '../data/products.js'
+import { Link } from '../router.jsx'
 
 const fmt = (n) => `$ ${n.toFixed(2)}`
 
@@ -18,7 +19,9 @@ export default function ProductCard({ product }) {
   return (
     <article className="product-card">
       <div className="product-image">
-        <img {...imageProps(product, product.name)} loading="lazy" />
+        <Link to={`/product/${product.slug}`} aria-label={`View ${product.name}`}>
+          <img {...imageProps(product, product.name)} loading="lazy" />
+        </Link>
         <button
           className={`wishlist-btn ${wished ? 'active' : ''}`}
           onClick={() => toggleWishlist(product)}
@@ -28,7 +31,7 @@ export default function ProductCard({ product }) {
         </button>
       </div>
       <div className="product-body">
-        <h3>{product.name}</h3>
+        <h3><Link to={`/product/${product.slug}`}>{product.name}</Link></h3>
         <p className="desc">{product.description}</p>
         <div className="product-footer">
           <span className="price">{fmt(product.price)}</span>

@@ -78,6 +78,11 @@ export const categories = [
   { key: 'body', label: 'Body' },
 ]
 
+export const getProductBySlug = (slug) => products.find((p) => p.slug === slug)
+
+export const categoryLabel = (key) =>
+  categories.find((c) => c.key === key)?.label || key
+
 // Spread onto an <img>: tries the local file first; if it's missing
 // (images not downloaded yet), swaps to the remote URL automatically.
 export function imageProps(item, alt) {
